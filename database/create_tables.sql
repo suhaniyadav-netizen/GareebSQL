@@ -1,0 +1,8 @@
+CREATE TABLE branches (
+    branch_id INT AUTO_INCREMENT PRIMARY KEY,
+    branch_name VARCHAR(100) NOT NULL,
+    ifsc_code VARCHAR(11) NOT NULL UNIQUE,
+    city VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
