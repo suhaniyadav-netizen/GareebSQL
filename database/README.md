@@ -1,13 +1,12 @@
-# 🏦 SPPA Core Banking Database System (`sppa_bank_db`)
-> **DBMS Capstone Project — Production-Ready Relational Database Design, Implementation, and Empirical Verification**
+# `sppa_bank_db`
 
 ---
 
-## 📌 Executive Summary
+##  Executive Summary
 
-The **SPPA Bank Database System** (`sppa_bank_db`) is a robust, normalized relational database backend engineered for high-integrity financial operations. It is designed around real-world commercial banking workflows, encompassing customer onboarding (KYC), account lifecycle management, inter-branch multi-currency accounts, lending and amortization schedules, double-entry transactional accounting, and automated regulatory reporting.
+The `sppa_bank_db` is a robust, normalized relational database backend engineered for high-integrity financial operations. It is designed around real-world commercial banking workflows, encompassing customer onboarding (KYC), account lifecycle management, inter-branch multi-currency accounts, lending and amortization schedules, double-entry transactional accounting, and automated regulatory reporting.
 
-### 🌟 Key Highlights
+###  Key Highlights
 * **Strict Relational Normalization:** 3NF/BCNF compliance eliminating update, insertion, and deletion anomalies.
 * **Declarative Data Integrity:** Enforces multi-table constraints, unique indexes, and domain-level `CHECK` clauses (non-negative balances, positive transaction amounts).
 * **Enterprise Security & Auditability:** Role-Based Access Control (RBAC via DCL) for compliance auditors and atomic transaction controls (TCL) ensuring ACID properties during transfers.
@@ -15,83 +14,7 @@ The **SPPA Bank Database System** (`sppa_bank_db`) is a robust, normalized relat
 
 ---
 
-## 🏗️ Entity-Relationship (ER) Architecture
-
-```mermaid
-erDiagram
-    BRANCHES {
-        int branch_id PK
-        string branch_name
-        string ifsc_code UK
-        string city
-        timestamp created_at
-    }
-    CUSTOMERS {
-        int customer_id PK
-        string first_name
-        string last_name
-        string email UK
-        string phone UK
-        string pan_number UK
-        string kyc_status
-        int referred_by FK
-        timestamp created_at
-    }
-    ACCOUNTS {
-        int account_id PK
-        string account_number UK
-        int customer_id FK
-        int branch_id FK
-        string account_type
-        decimal balance
-        decimal interest_rate
-        string status
-        timestamp opened_at
-    }
-    LOANS {
-        int loan_id PK
-        int customer_id FK
-        int branch_id FK
-        string loan_type
-        decimal principal_amount
-        decimal interest_rate
-        int tenure_months
-        decimal outstanding_balance
-        string application_status
-        timestamp applied_at
-    }
-    TRANSACTIONS {
-        bigint transaction_id PK
-        string reference_no UK
-        int account_id FK
-        int related_account_id FK
-        string txn_type
-        decimal amount
-        decimal balance_after
-        string description
-        timestamp txn_timestamp
-    }
-    LOAN_REPAYMENTS {
-        int repayment_id PK
-        int loan_id FK
-        bigint transaction_id FK
-        decimal emi_amount
-        timestamp payment_date
-    }
-
-    CUSTOMERS ||--o{ CUSTOMERS : "refers"
-    CUSTOMERS ||--o{ ACCOUNTS : "owns"
-    CUSTOMERS ||--o{ LOANS : "borrows"
-    BRANCHES ||--o{ ACCOUNTS : "maintains"
-    BRANCHES ||--o{ LOANS : "originates"
-    ACCOUNTS ||--o{ TRANSACTIONS : "records"
-    LOANS ||--o{ LOAN_REPAYMENTS : "tracks"
-    TRANSACTIONS ||--|| LOAN_REPAYMENTS : "links"
-```
-
----
-
-## 🗄️ Database Schema & Relational Specifications
+##  Database Schema & Relational Specifications
 
 The schema consists of 6 interconnected tables structured to preserve referential consistency:
 
@@ -106,29 +29,7 @@ The schema consists of 6 interconnected tables structured to preserve referentia
 
 ---
 
-## 🚀 Execution & Setup Guide
-
-### Prerequisites
-* **RDBMS Engine:** MySQL Server 8.0 or higher
-* **Administration Tool:** MySQL Workbench 8.0 CE or MySQL Command Line Client (`mysql`)
-
-### Step-by-Step Pipeline
-Run the SQL scripts in strict numerical sequence to satisfy foreign key dependencies:
-
-```bash
-# 1. Connect to MySQL Server
-mysql -u root -p
-
-# 2. Execute files sequentially
-mysql> SOURCE create_tables.sql;
-mysql> SOURCE insert_sample_data.sql;
-mysql> SOURCE views_and_security.sql;
-mysql> SOURCE project_queries.sql;
-```
-
----
-
-## 📑 Detailed Script Walkthrough & Execution Proofs
+##  Detailed Script Walkthrough & Execution Proofs
 
 ---
 
