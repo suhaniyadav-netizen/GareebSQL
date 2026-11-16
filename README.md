@@ -6,6 +6,7 @@ A comprehensive Relational Database Management System (RDBMS) capstone project i
 
 - **[`database/`](./database/README.MD)**: Contains all SQL scripts (DDL, DML, Views, Security, Indexes, Triggers, Procedures) and verified execution screenshots.
   - [Detailed Database Documentation & Execution Proofs](./database/README.MD)
-- **`backend/`**: Backend application services and API integrations.
+- **[`backend/`](./backend/README.md)**: Python Flask REST API connecting the MySQL database with endpoints for branches, customers, accounts, transactions, loans, and analytics.
+  - [Detailed Backend Documentation & Setup Guide](./backend/README.md)
 - **`frontend/`**: Web application frontend interface.
 - **`docs/`**: Documentation, ER diagrams, and project reports.
