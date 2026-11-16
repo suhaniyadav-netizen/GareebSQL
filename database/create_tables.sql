@@ -15,7 +15,7 @@ CREATE TABLE customers (
     phone VARCHAR(15) NOT NULL UNIQUE,
     pan_number VARCHAR(10) NOT NULL UNIQUE,
     kyc_status ENUM('PENDING', 'VERIFIED', 'REJECTED') DEFAULT 'PENDING',
-    referred_by INT NULL, -- Enables Self-Join queries
+    referred_by INT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_customer_referral FOREIGN KEY (referred_by) 
         REFERENCES customers(customer_id) ON DELETE SET NULL
@@ -66,7 +66,7 @@ CREATE TABLE transactions (
     transaction_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     reference_no VARCHAR(36) NOT NULL UNIQUE,
     account_id INT NOT NULL,
-    related_account_id INT NULL, -- Populated for peer-to-peer fund transfers
+    related_account_id INT NULL, 
     txn_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER_IN', 'TRANSFER_OUT', 'LOAN_EMI') NOT NULL,
     amount DECIMAL(15, 2) NOT NULL,
     balance_after DECIMAL(15, 2) NOT NULL,
