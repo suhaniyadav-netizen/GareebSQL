@@ -1,12 +1,6 @@
 # `sppa_bank_db`
 
----
 
-##  Executive Summary
-
-The `sppa_bank_db` is a robust, normalized relational database backend engineered for high-integrity financial operations. It is designed around real-world commercial banking workflows, encompassing customer onboarding (KYC), account lifecycle management, inter-branch multi-currency accounts, lending and amortization schedules, double-entry transactional accounting, and automated regulatory reporting.
-
-###  Key Highlights
 * **Strict Relational Normalization:** 3NF/BCNF compliance eliminating update, insertion, and deletion anomalies.
 * **Declarative Data Integrity:** Enforces multi-table constraints, unique indexes, and domain-level `CHECK` clauses (non-negative balances, positive transaction amounts).
 * **Enterprise Security & Auditability:** Role-Based Access Control (RBAC via DCL) for compliance auditors and atomic transaction controls (TCL) ensuring ACID properties during transfers.
@@ -292,7 +286,7 @@ CALL get_account_statement('100100001001');
 
 ---
 
-## 🛡️ ACID Compliance & Integrity Guarantees
+##  ACID Compliance & Integrity Guarantees
 
 * **Atomicity:** Two-phase money transfers guarantee that both the debit from the source account and credit to the destination account succeed together, or roll back entirely.
 * **Consistency:** Managed through `CHECK (balance >= 0.00)` and `CHECK (amount > 0)`, preventing negative overdrafts or illicit zero-sum transactions.
