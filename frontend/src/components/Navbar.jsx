@@ -9,6 +9,7 @@ import {
   FileText, 
   CreditCard, 
   BarChart3, 
+  BookOpen,
   RefreshCw 
 } from 'lucide-react';
 
@@ -27,7 +28,8 @@ export default function Navbar({
     { id: 'transact', label: 'Transfers & Cash', icon: ArrowLeftRight },
     { id: 'statement', label: 'Passbook Statement', icon: FileText },
     { id: 'loans', label: 'Credit & Loans', icon: CreditCard },
-    { id: 'analytics', label: 'DBMS Analytics', icon: BarChart3 }
+    { id: 'analytics', label: 'DBMS Analytics', icon: BarChart3 },
+    { id: 'theory', label: 'Theory & Architecture', icon: BookOpen }
   ];
 
   return (

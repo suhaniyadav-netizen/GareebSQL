@@ -6,6 +6,7 @@ import TransactView from './components/TransactView';
 import StatementView from './components/StatementView';
 import LoansView from './components/LoansView';
 import AnalyticsView from './components/AnalyticsView';
+import TheoryView from './components/TheoryView';
 import Toast from './components/Toast';
 import { api } from './api';
 
@@ -176,6 +177,10 @@ export default function App() {
             customers={customers}
             showToast={showToast}
           />
+        )}
+
+        {currentTab === 'theory' && (
+          <TheoryView />
         )}
       </main>
 
