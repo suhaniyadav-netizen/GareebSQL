@@ -186,7 +186,7 @@ export default function App() {
 
       <footer className="footer" style={{ justifyContent: 'center' }}>
         <span>
-          © {new Date().getFullYear()}{' '}
+          DBMS Capstone Project : GareebSQL © Developed by{' '}
           <a 
             href="https://github.com/suhaniyadav-netizen/GareebSQL" 
             target="_blank" 
