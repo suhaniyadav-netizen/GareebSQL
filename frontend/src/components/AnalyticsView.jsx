@@ -651,19 +651,19 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
                   className={`btn btn-sm ${activeSetFilter === 'intersect' ? 'btn-primary' : 'btn-secondary'}`}
                   onClick={() => setActiveSetFilter('intersect')}
                 >
-                  INTERSECT ({setOps.intersect_accounts_and_loans?.length || 0})
+                  INTERSECT (A ∩ B) : {setOps.intersect_accounts_and_loans?.length || 0}
                 </button>
                 <button 
                   className={`btn btn-sm ${activeSetFilter === 'union' ? 'btn-primary' : 'btn-secondary'}`}
                   onClick={() => setActiveSetFilter('union')}
                 >
-                  UNION ({setOps.union_accounts_or_loans?.length || 0})
+                  UNION (A ∪ B) : {setOps.union_accounts_or_loans?.length || 0}
                 </button>
                 <button 
                   className={`btn btn-sm ${activeSetFilter === 'except' ? 'btn-primary' : 'btn-secondary'}`}
                   onClick={() => setActiveSetFilter('except')}
                 >
-                  EXCEPT ({setOps.except_accounts_no_loans?.length || 0})
+                  EXCEPT (A − B) : {setOps.except_accounts_no_loans?.length || 0}
                 </button>
               </div>
             </div>

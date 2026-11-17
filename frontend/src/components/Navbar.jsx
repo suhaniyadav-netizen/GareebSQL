@@ -40,7 +40,7 @@ export default function Navbar({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
               <span className="brand-title">GareebSQL</span>
-              <span className="brand-badge">sppa_bank_db</span>
+              <span className="brand-badge">sppa_bank_db • BCNF</span>
             </div>
           </div>
         </div>
