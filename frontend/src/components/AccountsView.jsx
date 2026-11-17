@@ -159,7 +159,7 @@ export default function AccountsView({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
       {/* Top Header & Action Controls */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-        <div style={{ display: 'flex', gap: '0.5rem', background: 'var(--bg-tertiary)', padding: '0.25rem', borderRadius: 'var(--radius-sm)' }}>
+        <div style={{ display: 'flex', gap: '0.4rem', background: 'var(--bg-tertiary)', padding: '0.25rem', border: '1px solid var(--border-strong)' }}>
           <button 
             className={`btn btn-sm ${subTab === 'accounts' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setSubTab('accounts')}

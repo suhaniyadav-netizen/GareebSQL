@@ -332,7 +332,7 @@ export default function TransactView({
             </div>
           </div>
 
-          <div style={{ marginTop: '1.5rem', padding: '0.85rem', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)' }}>
+          <div style={{ marginTop: '1.5rem', padding: '0.85rem', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)' }}>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>ACTIVE ACCOUNTS READY FOR TRANSACTING</div>
             <div className="font-mono" style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-primary)' }}>
               {accounts.filter(a => a.status === 'ACTIVE').length} Accounts

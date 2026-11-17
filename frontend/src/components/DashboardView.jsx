@@ -32,65 +32,65 @@ export default function DashboardView({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* KPI Cards */}
+      {/* Precision KPI Cards with Color Accents */}
       <div className="kpi-grid">
-        <div className="kpi-card">
-          <div className="kpi-label">Total Vault Deposits</div>
+        <div className="kpi-card" style={{ borderTopColor: 'var(--accent)' }}>
+          <div className="kpi-label">TOTAL VAULT DEPOSITS</div>
           <div className="kpi-value">{formatCurrency(accounts.total_balance)}</div>
           <div className="kpi-sub">
-            <span style={{ color: 'var(--accent-text)' }}>● {accounts.active || 0}</span> active accounts ({accounts.total || 0} total)
+            <span style={{ color: 'var(--accent-text)', fontWeight: 600 }}>● {accounts.active || 0}</span> active accounts ({accounts.total || 0} total)
           </div>
         </div>
 
-        <div className="kpi-card">
-          <div className="kpi-label">Active Customers</div>
+        <div className="kpi-card" style={{ borderTopColor: 'var(--info)' }}>
+          <div className="kpi-label">CUSTOMER DIRECTORY</div>
           <div className="kpi-value">{customers.total || 0}</div>
           <div className="kpi-sub">
-            <ShieldCheck size={14} style={{ color: 'var(--accent-text)' }} />
+            <ShieldCheck size={13} style={{ color: 'var(--accent-text)' }} />
             <span>{customers.verified_kyc || 0} Verified KYC</span>
           </div>
         </div>
 
-        <div className="kpi-card">
-          <div className="kpi-label">Disbursed Credit Book</div>
+        <div className="kpi-card" style={{ borderTopColor: 'var(--warning)' }}>
+          <div className="kpi-label">DISBURSED CREDIT BOOK</div>
           <div className="kpi-value">{formatCurrency(loans.total_principal)}</div>
           <div className="kpi-sub">
             <span>Outstanding: {formatCurrency(loans.total_outstanding)}</span>
           </div>
         </div>
 
-        <div className="kpi-card">
-          <div className="kpi-label">Total Volume Transacted</div>
+        <div className="kpi-card" style={{ borderTopColor: '#a855f7' }}>
+          <div className="kpi-label">TRANSACTED VOLUME</div>
           <div className="kpi-value">{formatCurrency(transactions.total_volume)}</div>
           <div className="kpi-sub">
-            <TrendingUp size={14} style={{ color: 'var(--info)' }} />
-            <span>{transactions.total_count || 0} total ledger events</span>
+            <TrendingUp size={13} style={{ color: 'var(--info)' }} />
+            <span>{transactions.total_count || 0} master ledger events</span>
           </div>
         </div>
       </div>
 
       {/* Quick Launchpad Banner */}
-      <div className="card" style={{ background: 'linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%)' }}>
+      <div className="card" style={{ borderLeft: '3px solid var(--accent)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.25rem' }}>
-              Core Banking Operations
+            <h3 style={{ fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.2rem' }}>
+              Core Banking Operations Control
             </h3>
-            <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)' }}>
-              Execute atomic TCL fund transfers, review customer KYC profiles, or generate stored procedure passbook statements.
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+              Execute atomic TCL transfers, review customer KYC profiles, or query stored procedure passbook statements.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <button className="btn btn-primary" onClick={() => onNavigate('transact')}>
-              <SendHorizontal size={15} />
+              <SendHorizontal size={14} />
               <span>Instant Transfer</span>
             </button>
             <button className="btn btn-secondary" onClick={() => onNavigate('statement')}>
-              <FileSpreadsheet size={15} />
+              <FileSpreadsheet size={14} />
               <span>Generate Statement</span>
             </button>
             <button className="btn btn-secondary" onClick={() => onNavigate('accounts')}>
-              <Users size={15} />
+              <Users size={14} />
               <span>Manage Accounts</span>
             </button>
           </div>
@@ -103,10 +103,10 @@ export default function DashboardView({
         <div className="card">
           <div className="card-header">
             <div className="card-title">
-              <TrendingUp size={18} style={{ color: 'var(--accent-text)' }} />
-              <span>Monthly Activity Ledger (Window Function)</span>
+              <TrendingUp size={16} style={{ color: 'var(--accent-text)' }} />
+              <span>Monthly Activity (SQL Window CTE)</span>
             </div>
-            <span className="badge badge-info">SQL Window CTE</span>
+            <span className="badge badge-info">WINDOW FUNCTION</span>
           </div>
 
           <div className="table-container" style={{ maxHeight: '280px' }}>
@@ -157,7 +157,7 @@ export default function DashboardView({
         <div className="card">
           <div className="card-header">
             <div className="card-title">
-              <Building2 size={18} style={{ color: 'var(--info)' }} />
+              <Building2 size={16} style={{ color: 'var(--info)' }} />
               <span>Branch Deposit Distribution</span>
             </div>
             <span className="badge badge-muted">{branches?.length || 0} Branches</span>

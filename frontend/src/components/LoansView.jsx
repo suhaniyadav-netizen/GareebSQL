@@ -204,7 +204,7 @@ export default function LoansView({
                           <span className="font-mono" style={{ color: 'var(--accent-text)' }}>{formatCurrency(repaid)}</span>
                           <span className="font-mono" style={{ color: 'var(--text-muted)' }}>{percent}%</span>
                         </div>
-                        <div style={{ width: '100%', height: '6px', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-full)', overflow: 'hidden' }}>
+                        <div style={{ width: '100%', height: '8px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', overflow: 'hidden' }}>
                           <div style={{ width: `${percent}%`, height: '100%', background: 'var(--accent)', transition: 'width 0.3s' }} />
                         </div>
                         <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
@@ -402,7 +402,7 @@ export default function LoansView({
               </button>
             </div>
 
-            <div style={{ background: 'var(--bg-tertiary)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', marginBottom: '1rem', fontSize: '0.85rem' }}>
+            <div style={{ background: 'var(--bg-tertiary)', padding: '0.75rem', border: '1px solid var(--border-strong)', marginBottom: '1rem', fontSize: '0.85rem' }}>
               <div>Borrower: <strong>{repayLoanTarget.customer_name}</strong></div>
               <div>Outstanding Balance: <strong className="font-mono" style={{ color: 'var(--danger)' }}>{formatCurrency(repayLoanTarget.outstanding_balance)}</strong></div>
             </div>

@@ -35,10 +35,10 @@ export default function Navbar({
       <header className="header">
         <div className="brand">
           <div className="brand-icon">
-            <Landmark size={20} />
+            <Landmark size={18} />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
               <span className="brand-title">GareebSQL</span>
               <span className="brand-badge">sppa_bank_db</span>
             </div>
@@ -48,7 +48,7 @@ export default function Navbar({
         <div className="header-actions">
           <div className="status-pill" title="MySQL Backend Connectivity">
             <span className={`status-dot ${isOnline ? 'online' : 'offline'}`} />
-            <span>{isOnline ? 'Core Engine Online' : 'Engine Disconnected'}</span>
+            <span>{isOnline ? 'ENGINE ONLINE' : 'DISCONNECTED'}</span>
           </div>
 
           <button 
@@ -57,7 +57,7 @@ export default function Navbar({
             title="Refresh Data"
             disabled={isRefreshing}
           >
-            <RefreshCw size={16} className={isRefreshing ? 'animate-spin' : ''} />
+            <RefreshCw size={14} className={isRefreshing ? 'animate-spin' : ''} />
           </button>
 
           <button 
@@ -65,7 +65,7 @@ export default function Navbar({
             onClick={toggleTheme} 
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
-            {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
           </button>
         </div>
       </header>
@@ -80,7 +80,7 @@ export default function Navbar({
               className={`nav-tab ${isActive ? 'active' : ''}`}
               onClick={() => setCurrentTab(tab.id)}
             >
-              <Icon size={16} />
+              <Icon size={14} />
               <span>{tab.label}</span>
             </button>
           );

@@ -14,7 +14,8 @@ export default function Toast({ toasts, onDismiss }) {
             key={toast.id} 
             className="toast"
             style={{ 
-              borderColor: isSuccess ? 'rgba(16, 185, 129, 0.4)' : isError ? 'rgba(244, 63, 94, 0.4)' : 'var(--border)'
+              borderColor: 'var(--border-strong)',
+              borderLeft: isSuccess ? '4px solid var(--accent)' : isError ? '4px solid var(--danger)' : '4px solid var(--info)'
             }}
           >
             {isSuccess && <CheckCircle2 size={16} style={{ color: 'var(--accent-text)', flexShrink: 0 }} />}

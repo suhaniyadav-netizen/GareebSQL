@@ -63,7 +63,7 @@ export default function AnalyticsView({ showToast }) {
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.4rem', background: 'var(--bg-tertiary)', padding: '0.25rem', borderRadius: 'var(--radius-sm)' }}>
+          <div style={{ display: 'flex', gap: '0.4rem', background: 'var(--bg-tertiary)', padding: '0.25rem', border: '1px solid var(--border-strong)' }}>
             <button 
               className={`btn btn-sm ${activeReport === 'balances' ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => setActiveReport('balances')}
@@ -240,7 +240,7 @@ export default function AnalyticsView({ showToast }) {
             </div>
           </div>
 
-          <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)', marginBottom: '1rem', fontSize: '0.8rem' }}>
+          <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', marginBottom: '1rem', fontSize: '0.8rem' }}>
             {activeSetTab === 'intersect' && (
               <span><strong>INTERSECT (Both Depositor & Borrower):</strong> Customers holding both an active deposit account and a loan.</span>
             )}
