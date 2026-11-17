@@ -63,7 +63,7 @@ export default function TheoryView() {
               className={`btn btn-sm ${activeModule === 'algebra' ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => setActiveModule('algebra')}
             >
-              5. Relational Algebra
+              5. Relational Operations & SQL
             </button>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function TheoryView() {
               <span className="badge badge-success">ZERO REDUNDANCY</span>
             </div>
             <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>
-              Normalization systematically organizes attributes to eliminate insertion, update, and deletion anomalies. In <strong>sppa_bank_db</strong>, all 6 relations are fully decomposed to <strong>BCNF</strong>: for every non-trivial functional dependency <em>X → Y</em>, <em>X</em> is guaranteed to be a superkey.
+              Normalization systematically organizes attributes to eliminate insertion, update, and deletion anomalies. In <strong>sppa_bank_db</strong>, all 6 relations are fully decomposed to <strong>BCNF</strong>: for every non-trivial functional dependency where attribute X determines Y, X is guaranteed to be a superkey.
             </p>
 
             <div className="table-container" style={{ marginBottom: '1rem' }}>
@@ -109,13 +109,13 @@ export default function TheoryView() {
                   </tr>
                   <tr>
                     <td style={{ fontWeight: 700 }}>3NF (Third Normal Form)</td>
-                    <td>In 2NF and no non-prime attribute is transitively dependent on the primary key (<em>X → Y → Z</em>).</td>
+                    <td>In 2NF and no non-prime attribute is transitively dependent on the primary key (no chain where X determines Y and Y determines Z).</td>
                     <td>Branch city and branch name are factored out of <code>accounts</code> into <code>branches</code> (Branch ID foreign key reference only).</td>
                     <td><span className="badge badge-success">SATISFIED</span></td>
                   </tr>
                   <tr>
                     <td style={{ fontWeight: 700 }}>BCNF (Boyce-Codd)</td>
-                    <td>Strictly: For every functional dependency <em>X → Y</em>, <em>X</em> must be a candidate superkey.</td>
+                    <td>Strictly: For every functional dependency where X determines Y, X must be a candidate superkey.</td>
                     <td>Alternate keys (e.g., <code>ifsc_code</code>, <code>pan_number</code>, <code>account_number</code>, <code>reference_no</code>) each have unique constraints and determine their respective relations.</td>
                     <td><span className="badge badge-success">BCNF COMPLIANT</span></td>
                   </tr>
@@ -129,25 +129,25 @@ export default function TheoryView() {
             <div className="card-header">
               <div className="card-title">
                 <FileCode size={16} />
-                <span>Formal Functional Dependencies (FD Analysis)</span>
+                <span>Functional Dependencies (FD Analysis)</span>
               </div>
             </div>
             <div className="grid-2">
               <div style={{ background: 'var(--bg-tertiary)', padding: '0.85rem', border: '1px solid var(--border-strong)', fontSize: '0.8rem' }}>
                 <div style={{ fontWeight: 700, color: 'var(--accent-text)', marginBottom: '0.35rem' }}>RELATION: ACCOUNTS</div>
                 <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                  <li><code>account_id</code> → {'{account_number, customer_id, branch_id, balance, status}'}</li>
-                  <li><code>account_number</code> → {'{account_id, customer_id, branch_id, balance, status}'}</li>
-                  <li><em>Both determinants are candidate keys ⇒ BCNF verified.</em></li>
+                  <li><code>account_id</code> determines {'{account_number, customer_id, branch_id, balance, status}'}</li>
+                  <li><code>account_number</code> determines {'{account_id, customer_id, branch_id, balance, status}'}</li>
+                  <li><em>Both determinants are candidate keys (BCNF verified).</em></li>
                 </ul>
               </div>
 
               <div style={{ background: 'var(--bg-tertiary)', padding: '0.85rem', border: '1px solid var(--border-strong)', fontSize: '0.8rem' }}>
                 <div style={{ fontWeight: 700, color: 'var(--accent-text)', marginBottom: '0.35rem' }}>RELATION: TRANSACTIONS</div>
                 <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                  <li><code>transaction_id</code> → {'{reference_no, account_id, txn_type, amount, balance_after}'}</li>
-                  <li><code>reference_no</code> → {'{transaction_id, account_id, txn_type, amount, balance_after}'}</li>
-                  <li><em>Every determinant is a superkey ⇒ Zero redundancy.</em></li>
+                  <li><code>transaction_id</code> determines {'{reference_no, account_id, txn_type, amount, balance_after}'}</li>
+                  <li><code>reference_no</code> determines {'{transaction_id, account_id, txn_type, amount, balance_after}'}</li>
+                  <li><em>Every determinant is a superkey (Zero redundancy).</em></li>
                 </ul>
               </div>
             </div>
@@ -343,69 +343,69 @@ T1: COMMIT;                               -- Atomic commit and release of all lo
         </div>
       )}
 
-      {/* Module 5: Relational Algebra */}
+      {/* Module 5: Relational Operations & SQL */}
       {activeModule === 'algebra' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div className="card">
             <div className="card-header">
               <div className="card-title">
                 <Scale size={16} style={{ color: 'var(--accent-text)' }} />
-                <span>Relational Algebra Operators Mapped to SQL Execution</span>
+                <span>Relational Operations Mapped to SQL Execution</span>
               </div>
-              <span className="badge badge-success">MATHEMATICAL RELATIONAL ALGEBRA</span>
+              <span className="badge badge-success">CORE RELATIONAL OPERATIONS</span>
             </div>
 
             <div className="table-container">
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Operator</th>
-                    <th>Algebraic Symbol</th>
-                    <th>Formal Definition</th>
+                    <th>Relational Operation</th>
+                    <th>SQL Equivalent</th>
+                    <th>Meaning & Plain Explanation</th>
                     <th>Implemented SQL Query in Project</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td style={{ fontWeight: 700 }}>Selection</td>
-                    <td className="font-mono">σ_p(R)</td>
-                    <td>Filters tuples satisfying condition <em>p</em>.</td>
+                    <td style={{ fontWeight: 700 }}>Selection (Row Filtering)</td>
+                    <td className="font-mono" style={{ color: 'var(--accent-text)' }}>WHERE clause</td>
+                    <td>Filters rows satisfying a condition (e.g. only active accounts).</td>
                     <td><code>SELECT * FROM accounts WHERE status = 'ACTIVE'</code></td>
                   </tr>
                   <tr>
-                    <td style={{ fontWeight: 700 }}>Projection</td>
-                    <td className="font-mono">π_A(R)</td>
-                    <td>Extracts specified attributes, eliminating duplicate tuples.</td>
+                    <td style={{ fontWeight: 700 }}>Projection (Column Picking)</td>
+                    <td className="font-mono" style={{ color: 'var(--accent-text)' }}>SELECT columns</td>
+                    <td>Extracts only requested columns and ignores unused fields.</td>
                     <td><code>SELECT account_number, balance FROM accounts</code></td>
                   </tr>
                   <tr>
                     <td style={{ fontWeight: 700 }}>Natural / Inner Join</td>
-                    <td className="font-mono">Inner Join (R, S)</td>
-                    <td>Combines tuples on matching foreign key equality.</td>
+                    <td className="font-mono" style={{ color: 'var(--accent-text)' }}>INNER JOIN ... ON</td>
+                    <td>Combines matching rows between two tables using foreign key equality.</td>
                     <td><code>accounts a INNER JOIN customers c ON a.customer_id = c.customer_id</code></td>
                   </tr>
                   <tr>
                     <td style={{ fontWeight: 700 }}>Left Outer Join</td>
-                    <td className="font-mono">Left Join (R, S)</td>
-                    <td>Preserves all tuples from left relation, padding missing right attributes with NULL.</td>
+                    <td className="font-mono" style={{ color: 'var(--accent-text)' }}>LEFT JOIN ... ON</td>
+                    <td>Preserves all records from the left table, filling missing right table values with NULL.</td>
                     <td><code>customers c LEFT JOIN loans l ON c.customer_id = l.customer_id</code></td>
                   </tr>
                   <tr>
                     <td style={{ fontWeight: 700 }}>Set Union</td>
-                    <td className="font-mono">R ∪ S</td>
-                    <td>All distinct tuples appearing in relation R or relation S.</td>
+                    <td className="font-mono" style={{ color: 'var(--accent-text)' }}>UNION</td>
+                    <td>Combines distinct records from both queries into one combined list.</td>
                     <td><code>SELECT customer_id FROM accounts UNION SELECT customer_id FROM loans</code></td>
                   </tr>
                   <tr>
                     <td style={{ fontWeight: 700 }}>Set Intersection</td>
-                    <td className="font-mono">R ∩ S</td>
-                    <td>Tuples appearing in both relation R and relation S.</td>
+                    <td className="font-mono" style={{ color: 'var(--accent-text)' }}>INTERSECT</td>
+                    <td>Returns only records that appear in both queries simultaneously.</td>
                     <td><code>SELECT customer_id FROM accounts INTERSECT SELECT customer_id FROM loans</code></td>
                   </tr>
                   <tr>
-                    <td style={{ fontWeight: 700 }}>Set Difference (Minus)</td>
-                    <td className="font-mono">R − S</td>
-                    <td>Tuples appearing in relation R but NOT in relation S.</td>
+                    <td style={{ fontWeight: 700 }}>Set Difference</td>
+                    <td className="font-mono" style={{ color: 'var(--accent-text)' }}>EXCEPT / NOT IN</td>
+                    <td>Returns records that exist in the first query but NOT in the second query.</td>
                     <td><code>SELECT customer_id FROM accounts EXCEPT SELECT customer_id FROM loans</code></td>
                   </tr>
                 </tbody>
