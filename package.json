@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node dev.js",
     "start": "node dev.js",
+    "tunnel": "cloudflared tunnel --url http://localhost:5173",
     "build": "npm run build --prefix frontend",
     "test:backend": "cd backend && python test_api.py"
   },
