@@ -242,6 +242,21 @@ export default function AccountsView({
         </div>
       </div>
 
+      {/* Theoretical Context Bar */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.725rem', color: 'var(--text-secondary)', background: 'var(--bg-tertiary)', padding: '0.45rem 0.75rem', border: '1px solid var(--border-strong)', flexWrap: 'wrap', gap: '0.5rem' }}>
+        {subTab === 'accounts' ? (
+          <>
+            <span><strong>RELATIONAL SCHEMA:</strong> <code>ACCOUNTS</code> relation is BCNF Normalized.</span>
+            <span><strong>INTEGRITY:</strong> FK <code>branch_id</code> (ON DELETE RESTRICT) • Check Constraint <code>balance &gt;= 0</code></span>
+          </>
+        ) : (
+          <>
+            <span><strong>ENTITY INTEGRITY:</strong> Primary Key <code>customer_id</code> (AUTO_INCREMENT, NOT NULL).</span>
+            <span><strong>CANDIDATE KEYS:</strong> Unique constraints on <code>pan_number</code>, <code>email</code>, <code>phone</code>.</span>
+          </>
+        )}
+      </div>
+
       {/* Main Table view */}
       {subTab === 'accounts' ? (
         <div className="table-container">

@@ -229,6 +229,16 @@ export default function TransactView({
                 </div>
               </div>
 
+              <div style={{ background: 'var(--bg-tertiary)', padding: '0.65rem', border: '1px solid var(--border-strong)', marginBottom: '0.75rem', fontSize: '0.725rem' }}>
+                <div style={{ fontWeight: 700, marginBottom: '0.25rem' }}>DBMS TRANSACTION PIPELINE (ACID & TCL):</div>
+                <div style={{ color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                  <span>• <strong>Isolation:</strong> <code>SELECT ... FOR UPDATE</code> applies row-level exclusive locks (2PL X-Lock).</span>
+                  <span>• <strong>Consistency:</strong> Verifies sender balance ≥ transfer amount (Invariance check).</span>
+                  <span>• <strong>Atomicity:</strong> Dual updates committed atomically via <code>START TRANSACTION ... COMMIT</code>.</span>
+                  <span>• <strong>Durability:</strong> Recorded in Write-Ahead Log (WAL) and master ledger.</span>
+                </div>
+              </div>
+
               <div style={{ marginTop: '0.5rem' }}>
                 <button 
                   type="submit" 

@@ -99,6 +99,11 @@ export default function StatementView({ accounts, showToast }) {
             </div>
           )}
         </div>
+
+        <div style={{ marginTop: '0.85rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border)', fontSize: '0.725rem', color: 'var(--text-secondary)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <span><strong>PROCEDURAL ABSTRACTION:</strong> Calls pre-compiled stored procedure <code>get_account_statement(acc_no)</code>.</span>
+          <span><strong>QUERY:</strong> Inner Join of <code>transactions</code> and <code>accounts</code> using index <code>idx_account_transactions</code>.</span>
+        </div>
       </div>
 
       {/* Account Details Header Banner */}
