@@ -169,6 +169,11 @@ export default function App() {
 
         {currentTab === 'analytics' && (
           <AnalyticsView 
+            summary={summary}
+            accounts={accounts}
+            loans={loans}
+            branches={branches}
+            customers={customers}
             showToast={showToast}
           />
         )}

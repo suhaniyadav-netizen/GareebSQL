@@ -28,6 +28,7 @@ export const api = {
   // Analytics & Dashboard
   getSummary: () => request('/api/analytics/summary'),
   getCustomerBalances: () => request('/api/analytics/customer-balances'),
+  getCustomerLoans: () => request('/api/analytics/customer-loans'),
   getMonthlyActivity: () => request('/api/analytics/monthly-activity'),
   getSetOperations: () => request('/api/analytics/set-operations'),
   getAboveAverageCustomers: () => request('/api/analytics/above-average-customers'),
