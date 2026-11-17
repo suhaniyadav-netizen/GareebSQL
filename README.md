@@ -4,6 +4,22 @@ A comprehensive Relational Database Management System (RDBMS) capstone project i
 
 ---
 
+## ⚡ Single Command Quickstart
+
+You can start both the **Backend API (Flask :5000)** and the **Frontend Web App (Vite :5173)** simultaneously with one single command:
+
+```bash
+npm run dev
+```
+
+> **Automatic setup included:** The unified launcher automatically checks for missing dependencies (both Node `npm install` and Python `pip install -r requirements.txt`) and boots both services with colored live output!
+
+- **Web Application UI:** `http://localhost:5173`
+- **REST API Backend:** `http://localhost:5000`
+- **API Health Check:** `http://localhost:5000/api/health`
+
+---
+
 ## 📁 Repository Structure
 
 - **[`database/`](./database/README.MD)**: Contains all SQL scripts (DDL, DML, Views, Security, Indexes, Triggers, Procedures) and verified execution screenshots.
@@ -16,9 +32,11 @@ A comprehensive Relational Database Management System (RDBMS) capstone project i
 
 ---
 
-## 🚀 Running the Full Stack
+## 🛠️ Manual / Step-by-Step Execution
 
-### 1. Database
+If you prefer running components separately:
+
+### 1. Database Setup
 Load the MySQL schema and sample data:
 ```bash
 mysql -u root -p < database/create_tables.sql
@@ -26,18 +44,16 @@ mysql -u root -p < database/insert_sample_data.sql
 mysql -u root -p < database/views_and_security.sql
 ```
 
-### 2. Backend API
+### 2. Backend Only
 ```bash
 cd backend
 pip install -r requirements.txt
 python run.py
 ```
-Backend API will start at `http://localhost:5000`.
 
-### 3. Frontend Web App
+### 3. Frontend Only
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-Frontend client will start at `http://localhost:5173`.

@@ -1,0 +1,21 @@
+{
+  "name": "gareebsql",
+  "version": "1.0.0",
+  "description": "GareebSQL — Core Banking DBMS Project with Dual Theme Frontend & Flask Backend",
+  "type": "module",
+  "scripts": {
+    "dev": "node dev.js",
+    "start": "node dev.js",
+    "build": "npm run build --prefix frontend",
+    "test:backend": "cd backend && python test_api.py"
+  },
+  "keywords": [
+    "dbms",
+    "mysql",
+    "flask",
+    "react",
+    "banking"
+  ],
+  "author": "suhaniyadav-netizen",
+  "license": "ISC"
+}
