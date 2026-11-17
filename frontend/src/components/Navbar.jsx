@@ -29,7 +29,7 @@ export default function Navbar({
     { id: 'statement', label: 'Passbook Statement', icon: FileText },
     { id: 'loans', label: 'Credit & Loans', icon: CreditCard },
     { id: 'analytics', label: 'DBMS Analytics', icon: BarChart3 },
-    { id: 'theory', label: 'Theory & Architecture', icon: BookOpen }
+    { id: 'theory', label: 'Viva & Theory Guide', icon: BookOpen }
   ];
 
   return (

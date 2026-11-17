@@ -3,415 +3,365 @@ import {
   BookOpen, 
   Layers, 
   ShieldCheck, 
-  GitBranch, 
-  Scale, 
   Lock, 
   Database,
-  ArrowRight,
-  ChevronDown,
-  ChevronUp,
-  FileCode,
+  HelpCircle,
+  FileText,
   CheckCircle2
 } from 'lucide-react';
 
 export default function TheoryView() {
-  const [activeModule, setActiveModule] = useState('normalization');
-  // 'normalization' | 'acid' | 'integrity' | 'architecture' | 'algebra'
+  const [viewMode, setViewMode] = useState('viva'); 
+  // 'viva' (5-minute teacher presentation) | 'reference' (detailed syllabus modules)
+  
+  const [activeReferenceTab, setActiveReferenceTab] = useState('normalization');
+
+  const vivaQuestions = [
+    {
+      q: '1. What is this project and what are the core entities?',
+      a: 'GareebSQL is a production-grade Core Banking Relational Database (sppa_bank_db). It models real-world retail banking with 6 primary relations:',
+      bullets: [
+        'BRANCHES: Physical branch locations and unique IFSC codes.',
+        'CUSTOMERS: KYC profiles, PAN numbers, Aadhaar, and referral links.',
+        'ACCOUNTS: Savings, Current, and FD accounts with live balances.',
+        'LOANS: Multi-category credit facilities (Personal, Home, Vehicle, Education).',
+        'TRANSACTIONS: Immutable double-entry ledger for deposits, withdrawals, and transfers.',
+        'LOAN_REPAYMENTS: Atomic EMI payments linked directly to transactions.'
+      ]
+    },
+    {
+      q: '2. What Normal Form is your database in?',
+      a: 'All 6 relations are strictly normalized to Boyce-Codd Normal Form (BCNF) and Third Normal Form (3NF):',
+      bullets: [
+        '1NF: Every attribute holds atomic, indivisible values (no multi-valued lists).',
+        '2NF: Zero partial dependencies; all primary keys are single attributes.',
+        '3NF: Zero transitive dependencies (e.g. branch city is factored into BRANCHES table rather than repeated in ACCOUNTS).',
+        'BCNF: For every functional dependency X → Y, X is strictly a candidate superkey.'
+      ]
+    },
+    {
+      q: '3. How does the database guarantee Integrity Constraints?',
+      a: 'Enforced at the relational engine level in MySQL 8.0:',
+      bullets: [
+        'Entity Integrity: Every relation has an auto-increment Primary Key (PK) that cannot be NULL.',
+        'Referential Integrity: Foreign Keys (FK) use ON DELETE RESTRICT to prevent deleting a customer who has active accounts or unpaid loans.',
+        'Domain Constraints: ENUM constraints on kyc_status, account_type, and status; DECIMAL(15,2) for exact monetary precision.',
+        'Key Constraints: UNIQUE constraints on PAN, IFSC, account numbers, and transaction reference numbers.'
+      ]
+    },
+    {
+      q: '4. How do you handle Transactions and ACID Properties?',
+      a: 'Fund transfers between accounts use strict Transaction Control Language (TCL):',
+      bullets: [
+        'Atomicity: Wrapped in START TRANSACTION and COMMIT. If sender debit succeeds but receiver credit fails, the entire transaction rolls back.',
+        'Consistency: Total vault balance is invariant during transfers; balance >= 0 is enforced.',
+        'Isolation: Row-level pessimistic locking (SELECT ... FOR UPDATE) prevents Lost Updates and Dirty Reads under concurrent access.',
+        'Durability: MySQL InnoDB Write-Ahead Logging (WAL) and Redo Logs guarantee persistence once committed.'
+      ]
+    },
+    {
+      q: '5. What Views, Joins, and Advanced Queries are implemented?',
+      a: 'The system implements all standard relational query patterns:',
+      bullets: [
+        'SQL Views: customer_balance_view and customer_loan_view for logical data independence.',
+        'Joins: Inner Joins (Accounts with Customers & Branches) and Left Outer Joins (Customers with no active loans).',
+        'Subqueries: Non-correlated subquery identifying high-net-worth customers whose balance exceeds the overall bank average.',
+        'Set Operations: UNION, INTERSECT, and EXCEPT comparing depositors vs borrowers.',
+        'Window Functions: Running net balance and peer deposit rankings using RANK() OVER and SUM() OVER.'
+      ]
+    }
+  ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Header Banner */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      {/* Top Controller */}
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <div className="card-title">
-              <BookOpen size={18} style={{ color: 'var(--accent-text)' }} />
-              <span>DBMS Syllabus & Theoretical Architecture</span>
+              <BookOpen size={16} />
+              <span>DBMS Theory & Viva Presentation Guide</span>
             </div>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-              Rigorous relational database management system principles implemented within <code>sppa_bank_db</code>.
+              Structured relational concepts and speaking points designed for project demonstrations and oral examinations.
             </p>
           </div>
 
-          {/* Module Selector */}
-          <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '0.4rem' }}>
             <button 
-              className={`btn btn-sm ${activeModule === 'normalization' ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setActiveModule('normalization')}
+              className={`btn btn-sm ${viewMode === 'viva' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setViewMode('viva')}
             >
-              1. Normalization (BCNF)
+              <HelpCircle size={13} />
+              <span>Viva Presentation Mode (5 Core Q&A)</span>
             </button>
             <button 
-              className={`btn btn-sm ${activeModule === 'acid' ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setActiveModule('acid')}
+              className={`btn btn-sm ${viewMode === 'reference' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setViewMode('reference')}
             >
-              2. ACID & Concurrency
-            </button>
-            <button 
-              className={`btn btn-sm ${activeModule === 'integrity' ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setActiveModule('integrity')}
-            >
-              3. Integrity Constraints
-            </button>
-            <button 
-              className={`btn btn-sm ${activeModule === 'architecture' ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setActiveModule('architecture')}
-            >
-              4. 3-Schema Architecture
-            </button>
-            <button 
-              className={`btn btn-sm ${activeModule === 'algebra' ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setActiveModule('algebra')}
-            >
-              5. Relational Algebra
+              <Database size={13} />
+              <span>Full Syllabus Reference</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Module 1: Normalization (1NF to BCNF) */}
-      {activeModule === 'normalization' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">
-                <Layers size={16} style={{ color: 'var(--accent-text)' }} />
-                <span>Decomposition & Boyce-Codd Normal Form (BCNF)</span>
-              </div>
-              <span className="badge badge-success">ZERO REDUNDANCY</span>
-            </div>
-            <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>
-              Normalization systematically organizes attributes to eliminate insertion, update, and deletion anomalies. In <strong>sppa_bank_db</strong>, all 6 relations are fully decomposed to <strong>BCNF</strong>: for every non-trivial functional dependency <em>X → Y</em>, <em>X</em> is guaranteed to be a superkey.
-            </p>
-
-            <div className="table-container" style={{ marginBottom: '1rem' }}>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Normal Form</th>
-                    <th>Theoretical Requirement</th>
-                    <th>Implementation in Core Banking Schema</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>1NF (First Normal Form)</td>
-                    <td>Atomic attribute domains; no repeating groups or multivalued arrays.</td>
-                    <td>Customer phones, emails, and address segments stored as discrete atomic scalar fields.</td>
-                    <td><span className="badge badge-success">SATISFIED</span></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>2NF (Second Normal Form)</td>
-                    <td>In 1NF and no non-prime attribute is partially dependent on any candidate key.</td>
-                    <td>All candidate keys (e.g. <code>account_id</code>, <code>loan_id</code>, <code>transaction_id</code>) are single-attribute keys. Zero partial dependencies.</td>
-                    <td><span className="badge badge-success">SATISFIED</span></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>3NF (Third Normal Form)</td>
-                    <td>In 2NF and no non-prime attribute is transitively dependent on the primary key (<em>X → Y → Z</em>).</td>
-                    <td>Branch city and branch name are factored out of <code>accounts</code> into <code>branches</code> (Branch ID foreign key reference only).</td>
-                    <td><span className="badge badge-success">SATISFIED</span></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>BCNF (Boyce-Codd)</td>
-                    <td>Strictly: For every functional dependency <em>X → Y</em>, <em>X</em> must be a candidate superkey.</td>
-                    <td>Alternate keys (e.g., <code>ifsc_code</code>, <code>pan_number</code>, <code>account_number</code>, <code>reference_no</code>) each have unique constraints and determine their respective relations.</td>
-                    <td><span className="badge badge-success">BCNF COMPLIANT</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Formal Functional Dependencies */}
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">
-                <FileCode size={16} />
-                <span>Formal Functional Dependencies (FD Analysis)</span>
-              </div>
-            </div>
-            <div className="grid-2">
-              <div style={{ background: 'var(--bg-tertiary)', padding: '0.85rem', border: '1px solid var(--border-strong)', fontSize: '0.8rem' }}>
-                <div style={{ fontWeight: 700, color: 'var(--accent-text)', marginBottom: '0.35rem' }}>RELATION: ACCOUNTS</div>
-                <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                  <li><code>account_id</code> → {'{account_number, customer_id, branch_id, balance, status}'}</li>
-                  <li><code>account_number</code> → {'{account_id, customer_id, branch_id, balance, status}'}</li>
-                  <li><em>Both determinants are candidate keys ⇒ BCNF verified.</em></li>
-                </ul>
+      {/* Mode 1: Viva Presentation Q&A Walkthrough */}
+      {viewMode === 'viva' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {vivaQuestions.map((item, idx) => (
+            <div key={idx} className="card">
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <span className="font-mono" style={{ 
+                  fontWeight: 800, 
+                  background: 'var(--bg-tertiary)', 
+                  border: '1px solid var(--border-strong)', 
+                  padding: '0.2rem 0.55rem', 
+                  fontSize: '0.75rem' 
+                }}>
+                  TOPIC {idx + 1}
+                </span>
+                <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                  {item.q}
+                </h3>
               </div>
 
-              <div style={{ background: 'var(--bg-tertiary)', padding: '0.85rem', border: '1px solid var(--border-strong)', fontSize: '0.8rem' }}>
-                <div style={{ fontWeight: 700, color: 'var(--accent-text)', marginBottom: '0.35rem' }}>RELATION: TRANSACTIONS</div>
-                <ul style={{ paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                  <li><code>transaction_id</code> → {'{reference_no, account_id, txn_type, amount, balance_after}'}</li>
-                  <li><code>reference_no</code> → {'{transaction_id, account_id, txn_type, amount, balance_after}'}</li>
-                  <li><em>Every determinant is a superkey ⇒ Zero redundancy.</em></li>
-                </ul>
-              </div>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', marginBottom: '0.65rem', lineHeight: 1.5 }}>
+                {item.a}
+              </p>
+
+              <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.8rem', color: 'var(--text-primary)' }}>
+                {item.bullets.map((b, bIdx) => (
+                  <li key={bIdx} style={{ lineHeight: 1.5 }}>{b}</li>
+                ))}
+              </ul>
             </div>
-          </div>
+          ))}
         </div>
       )}
 
-      {/* Module 2: ACID & Concurrency Control */}
-      {activeModule === 'acid' && (
+      {/* Mode 2: Full Syllabus Reference */}
+      {viewMode === 'reference' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">
-                <Lock size={16} style={{ color: 'var(--accent-text)' }} />
-                <span>Transaction Processing & ACID Properties</span>
-              </div>
-              <span className="badge badge-info">SERIALIZABLE CONCURRENCY</span>
-            </div>
-
-            <div className="kpi-grid" style={{ marginBottom: '1rem' }}>
-              <div className="kpi-card">
-                <div className="kpi-label">A — ATOMICITY</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, marginTop: '0.25rem' }}>All-or-Nothing Execution</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                  Multi-account fund transfers execute within a single TCL block (<code>START TRANSACTION ... COMMIT / ROLLBACK</code>). If a debit succeeds but credit fails, changes rollback immediately.
-                </div>
-              </div>
-
-              <div className="kpi-card">
-                <div className="kpi-label">C — CONSISTENCY</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, marginTop: '0.25rem' }}>Mathematical Invariance</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                  Total money in the system is invariant during transfers: (Sender Balance + Receiver Balance) before transfer equals total after transfer. Negative balances strictly prohibited.
-                </div>
-              </div>
-
-              <div className="kpi-card">
-                <div className="kpi-label">I — ISOLATION</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, marginTop: '0.25rem' }}>Two-Phase Locking (2PL)</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                  Enforced via <code>SELECT ... FOR UPDATE</code>. Rows locked in exclusive mode (X-lock) to prevent Dirty Reads (G1), Non-Repeatable Reads (G2a), and Lost Updates.
-                </div>
-              </div>
-
-              <div className="kpi-card">
-                <div className="kpi-label">D — DURABILITY</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, marginTop: '0.25rem' }}>Write-Ahead Logging (WAL)</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                  MySQL InnoDB Redo Logs ensure that once a <code>COMMIT</code> returns success to the client, the transaction remains permanently recorded even upon sudden system reboot.
-                </div>
-              </div>
-            </div>
-
-            {/* Formal Serial Schedule Notation */}
-            <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', border: '1px solid var(--border-strong)' }}>
-              <div style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--accent-text)', marginBottom: '0.4rem' }}>
-                FORMAL INTER-ACCOUNT TRANSFER TRANSACTION SCHEDULE:
-              </div>
-              <pre className="font-mono" style={{ fontSize: '0.75rem', lineHeight: 1.6, overflowX: 'auto' }}>
-{`T1: START TRANSACTION;
-T1: r1(Account_A.balance)                 -- Read sender balance with X-Lock (FOR UPDATE)
-T1: Verify(Account_A.balance >= Amount)   -- Consistency assertion
-T1: w1(Account_A.balance - Amount)        -- Debit sender
-T1: r1(Account_B.balance)                 -- Read receiver balance with X-Lock (FOR UPDATE)
-T1: w1(Account_B.balance + Amount)        -- Credit receiver
-T1: w1(Insert Transaction TRF-OUT)       -- Audit trail debit record
-T1: w1(Insert Transaction TRF-IN)        -- Audit trail credit record
-T1: COMMIT;                               -- Atomic commit and release of all locks`}
-              </pre>
-            </div>
+          {/* Sub Navigation */}
+          <div style={{ display: 'flex', gap: '0.35rem', background: 'var(--bg-tertiary)', padding: '0.35rem', border: '1px solid var(--border-strong)', flexWrap: 'wrap' }}>
+            <button 
+              className={`btn btn-sm ${activeReferenceTab === 'normalization' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setActiveReferenceTab('normalization')}
+            >
+              1. Normalization (BCNF)
+            </button>
+            <button 
+              className={`btn btn-sm ${activeReferenceTab === 'acid' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setActiveReferenceTab('acid')}
+            >
+              2. ACID & Concurrency
+            </button>
+            <button 
+              className={`btn btn-sm ${activeReferenceTab === 'integrity' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setActiveReferenceTab('integrity')}
+            >
+              3. Integrity Constraints
+            </button>
+            <button 
+              className={`btn btn-sm ${activeReferenceTab === 'algebra' ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setActiveReferenceTab('algebra')}
+            >
+              4. Relational Algebra & Joins
+            </button>
           </div>
-        </div>
-      )}
 
-      {/* Module 3: Integrity Constraints */}
-      {activeModule === 'integrity' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">
-                <ShieldCheck size={16} style={{ color: 'var(--accent-text)' }} />
-                <span>Integrity Constraints & Referential Cascade Policies</span>
-              </div>
-              <span className="badge badge-success">REFERENTIAL INTEGRITY</span>
-            </div>
-
-            <div className="table-container">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Constraint Class</th>
-                    <th>Formal Definition</th>
-                    <th>Enforcement in sppa_bank_db</th>
-                    <th>DBMS Action on Violation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Entity Integrity</td>
-                    <td>Primary Key cannot contain <code>NULL</code> values.</td>
-                    <td><code>PRIMARY KEY AUTO_INCREMENT</code> on all tables (<code>customer_id</code>, <code>account_id</code>, etc.).</td>
-                    <td>Rejection of tuple insertion.</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Referential Integrity</td>
-                    <td>Foreign key must either be <code>NULL</code> or match an existing Primary Key in the referenced parent relation.</td>
-                    <td>
-                      <code>FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE RESTRICT</code>
-                    </td>
-                    <td>
-                      <strong>RESTRICT:</strong> Prevents deletion of a customer who holds active bank accounts or outstanding loans.
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Domain Constraints</td>
-                    <td>Value must belong to valid attribute domain.</td>
-                    <td>
-                      <code>ENUM('SAVINGS', 'CURRENT', 'FD')</code> for account types; <code>DECIMAL(15,2)</code> for monetary balances.
-                    </td>
-                    <td>Schema validation error.</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Check Constraints</td>
-                    <td>Arbitrary predicate evaluating to TRUE or UNKNOWN for every tuple.</td>
-                    <td>
-                      <code>CHECK (balance &gt;= 0.00)</code> prevents overdrafts; <code>CHECK (interest_rate &gt;= 0.00)</code>.
-                    </td>
-                    <td>Immediate transaction abort.</td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Key Constraints (Uniqueness)</td>
-                    <td>No two distinct tuples can possess the same value on Candidate Keys.</td>
-                    <td>
-                      <code>UNIQUE</code> index on <code>pan_number</code>, <code>email</code>, <code>account_number</code>, and <code>reference_no</code>.
-                    </td>
-                    <td>Duplicate key error 1062.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Module 4: Three-Schema Architecture */}
-      {activeModule === 'architecture' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">
-                <Database size={16} style={{ color: 'var(--accent-text)' }} />
-                <span>ANSI/SPARC Three-Schema Architecture & Data Independence</span>
-              </div>
-              <span className="badge badge-info">ANSI/SPARC MODEL</span>
-            </div>
-
-            <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>
-              The ANSI/SPARC 3-level database architecture isolates user applications from physical storage concerns, providing <strong>Logical Data Independence</strong> and <strong>Physical Data Independence</strong>.
-            </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', border: '1px solid var(--border-strong)', borderLeft: '4px solid var(--accent)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>LEVEL 1: EXTERNAL / VIEW LEVEL (User Subschemas)</span>
-                  <span className="badge badge-success">VIRTUAL RELATIONS</span>
-                </div>
-                <div style={{ fontSize: '0.775rem', color: 'var(--text-secondary)' }}>
-                  Represented by <code>customer_balance_view</code> and <code>customer_loan_view</code>. External clients query aggregated balances and loan metrics without direct write exposure to base ledger tables.
+          {/* Reference Tab 1: Normalization */}
+          {activeReferenceTab === 'normalization' && (
+            <div className="card">
+              <div className="card-header">
+                <div className="card-title">
+                  <Layers size={16} />
+                  <span>Boyce-Codd Normal Form (BCNF) Verification</span>
                 </div>
               </div>
 
-              <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', border: '1px solid var(--border-strong)', borderLeft: '4px solid var(--info)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>LEVEL 2: CONCEPTUAL / LOGICAL LEVEL (Community View)</span>
-                  <span className="badge badge-info">BCNF BASE TABLES</span>
-                </div>
-                <div style={{ fontSize: '0.775rem', color: 'var(--text-secondary)' }}>
-                  The 6 normalized tables (<code>customers</code>, <code>branches</code>, <code>accounts</code>, <code>loans</code>, <code>transactions</code>, <code>loan_repayments</code>) capturing all entities, foreign keys, and enterprise integrity constraints.
+              <div className="table-container" style={{ marginBottom: '1rem' }}>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Normal Form</th>
+                      <th>Theoretical Rule</th>
+                      <th>Application in sppa_bank_db</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>1NF</td>
+                      <td>All attributes must hold atomic values; no arrays.</td>
+                      <td>Phone numbers, email addresses, and address fields stored as atomic scalar strings.</td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>2NF</td>
+                      <td>In 1NF and no non-prime attribute partially depends on a candidate key.</td>
+                      <td>All primary keys are single-column auto-increments. Zero composite key partial dependencies.</td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>3NF</td>
+                      <td>In 2NF and no transitive dependency exists (X → Y → Z).</td>
+                      <td>Branch city and branch name are factored into BRANCHES table, referenced via branch_id.</td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>BCNF</td>
+                      <td>For every functional dependency X → Y, X must be a superkey.</td>
+                      <td>All functional determinants (account_number, pan_number, ifsc_code) are candidate keys.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Reference Tab 2: ACID */}
+          {activeReferenceTab === 'acid' && (
+            <div className="card">
+              <div className="card-header">
+                <div className="card-title">
+                  <Lock size={16} />
+                  <span>ACID Transaction Execution Flow</span>
                 </div>
               </div>
 
-              <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', border: '1px solid var(--border-strong)', borderLeft: '4px solid var(--warning)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
-                  <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>LEVEL 3: INTERNAL / PHYSICAL LEVEL (Storage Structures)</span>
-                  <span className="badge badge-warning">INNODB B+ TREES</span>
-                </div>
-                <div style={{ fontSize: '0.775rem', color: 'var(--text-secondary)' }}>
-                  MySQL InnoDB clustered primary key index structures, B+ Tree secondary indexes (<code>idx_account_transactions</code>, <code>idx_customer_loans</code>), buffer pools, and doublewrite buffers on disk.
-                </div>
+              <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', border: '1px solid var(--border-strong)', marginBottom: '1rem' }}>
+                <pre className="font-mono" style={{ fontSize: '0.75rem', lineHeight: 1.6, overflowX: 'auto' }}>
+{`-- Safe TCL Atomic Money Transfer Procedure
+START TRANSACTION;
+
+-- Step 1: Read and Lock Sender Account (Pessimistic X-Lock)
+SELECT account_id, balance, status FROM accounts WHERE account_id = 1 FOR UPDATE;
+
+-- Step 2: Validate Sufficient Balance
+-- If balance < transfer_amount: ROLLBACK and abort
+
+-- Step 3: Debit Sender & Credit Receiver
+UPDATE accounts SET balance = balance - 2000.00 WHERE account_id = 1;
+UPDATE accounts SET balance = balance + 2000.00 WHERE account_id = 2;
+
+-- Step 4: Record Audit Trail in Master Ledger
+INSERT INTO transactions (reference_no, account_id, txn_type, amount, balance_after, description)
+VALUES ('TRF-OUT-001', 1, 'TRANSFER_OUT', 2000.00, balance_after, 'Fund transfer');
+
+INSERT INTO transactions (reference_no, account_id, txn_type, amount, balance_after, description)
+VALUES ('TRF-IN-001', 2, 'TRANSFER_IN', 2000.00, balance_after, 'Fund transfer');
+
+-- Step 5: Commit Atomically
+COMMIT;`}
+                </pre>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
-      {/* Module 5: Relational Algebra */}
-      {activeModule === 'algebra' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <div className="card">
-            <div className="card-header">
-              <div className="card-title">
-                <Scale size={16} style={{ color: 'var(--accent-text)' }} />
-                <span>Relational Algebra Operators Mapped to SQL Execution</span>
+          {/* Reference Tab 3: Integrity Constraints */}
+          {activeReferenceTab === 'integrity' && (
+            <div className="card">
+              <div className="card-header">
+                <div className="card-title">
+                  <ShieldCheck size={16} />
+                  <span>Integrity Constraint Matrix</span>
+                </div>
               </div>
-              <span className="badge badge-success">MATHEMATICAL RELATIONAL ALGEBRA</span>
-            </div>
 
-            <div className="table-container">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Operator</th>
-                    <th>Algebraic Symbol</th>
-                    <th>Formal Definition</th>
-                    <th>Implemented SQL Query in Project</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Selection</td>
-                    <td className="font-mono">σ_p(R)</td>
-                    <td>Filters tuples satisfying condition <em>p</em>.</td>
-                    <td><code>SELECT * FROM accounts WHERE status = 'ACTIVE'</code></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Projection</td>
-                    <td className="font-mono">π_A(R)</td>
-                    <td>Extracts specified attributes, eliminating duplicate tuples.</td>
-                    <td><code>SELECT account_number, balance FROM accounts</code></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Natural / Inner Join</td>
-                    <td className="font-mono">R ⋈ S</td>
-                    <td>Combines tuples on matching foreign key equality.</td>
-                    <td><code>accounts a INNER JOIN customers c ON a.customer_id = c.customer_id</code></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Left Outer Join</td>
-                    <td className="font-mono">R ⟕ S</td>
-                    <td>Preserves all tuples from left relation, padding missing right attributes with NULL.</td>
-                    <td><code>customers c LEFT JOIN loans l ON c.customer_id = l.customer_id</code></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Set Union</td>
-                    <td className="font-mono">R ∪ S</td>
-                    <td>All distinct tuples appearing in relation R or relation S.</td>
-                    <td><code>SELECT customer_id FROM accounts UNION SELECT customer_id FROM loans</code></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Set Intersection</td>
-                    <td className="font-mono">R ∩ S</td>
-                    <td>Tuples appearing in both relation R and relation S.</td>
-                    <td><code>SELECT customer_id FROM accounts INTERSECT SELECT customer_id FROM loans</code></td>
-                  </tr>
-                  <tr>
-                    <td style={{ fontWeight: 700 }}>Set Difference (Minus)</td>
-                    <td className="font-mono">R − S</td>
-                    <td>Tuples appearing in relation R but NOT in relation S.</td>
-                    <td><code>SELECT customer_id FROM accounts EXCEPT SELECT customer_id FROM loans</code></td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="table-container">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Constraint Type</th>
+                      <th>Database Rule</th>
+                      <th>Example in Core Banking</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Entity Integrity</td>
+                      <td>Primary key must exist and cannot be NULL.</td>
+                      <td><code>customer_id INT PRIMARY KEY AUTO_INCREMENT</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Referential Integrity</td>
+                      <td>Child foreign key must reference an existing parent tuple.</td>
+                      <td><code>FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE RESTRICT</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Domain Constraints</td>
+                      <td>Values must belong to a pre-defined set or range.</td>
+                      <td><code>status ENUM('ACTIVE', 'FROZEN', 'CLOSED')</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Key Constraints</td>
+                      <td>Candidate keys must be unique across all tuples.</td>
+                      <td><code>UNIQUE (pan_number)</code>, <code>UNIQUE (account_number)</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Reference Tab 4: Relational Algebra (Plain text, no confusing symbols) */}
+          {activeReferenceTab === 'algebra' && (
+            <div className="card">
+              <div className="card-header">
+                <div className="card-title">
+                  <FileText size={16} />
+                  <span>Relational Operations Mapped to SQL Queries</span>
+                </div>
+              </div>
+
+              <div className="table-container">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Relational Operation</th>
+                      <th>Plain English Purpose</th>
+                      <th>Implemented SQL Query in Project</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Selection</td>
+                      <td>Filters rows that satisfy a specific condition.</td>
+                      <td><code>SELECT * FROM accounts WHERE status = 'ACTIVE'</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Projection</td>
+                      <td>Picks specific columns from a relation.</td>
+                      <td><code>SELECT account_number, balance FROM accounts</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Inner Join</td>
+                      <td>Combines rows from two tables on a matching key.</td>
+                      <td><code>accounts a INNER JOIN customers c ON a.customer_id = c.customer_id</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Left Outer Join</td>
+                      <td>Preserves all rows from left table, padding missing right data with NULL.</td>
+                      <td><code>customers c LEFT JOIN loans l ON c.customer_id = l.customer_id</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Set Union</td>
+                      <td>Combines distinct customers from accounts or loans.</td>
+                      <td><code>SELECT customer_id FROM accounts UNION SELECT customer_id FROM loans</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Set Intersection</td>
+                      <td>Finds customers present in both accounts and loans.</td>
+                      <td><code>SELECT customer_id FROM accounts INTERSECT SELECT customer_id FROM loans</code></td>
+                    </tr>
+                    <tr>
+                      <td style={{ fontWeight: 700 }}>Set Difference (Except)</td>
+                      <td>Finds customers with accounts who have zero loans.</td>
+                      <td><code>SELECT customer_id FROM accounts EXCEPT SELECT customer_id FROM loans</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

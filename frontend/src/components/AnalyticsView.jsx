@@ -226,7 +226,7 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
 
       {/* SQL Logic Inspector Drawer */}
       {showSqlInspector && (
-        <div className="card" style={{ background: 'var(--bg-tertiary)', borderTop: '3px solid var(--accent)' }}>
+        <div className="card" style={{ background: 'var(--bg-tertiary)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
             <span style={{ fontSize: '0.75rem', fontWeight: 700, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', color: 'var(--info)' }}>
               UNDERLYING MYSQL SCHEMA & RELATIONAL LOGIC ({activeTab.toUpperCase()})
@@ -651,38 +651,38 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
                   className={`btn btn-sm ${activeSetFilter === 'intersect' ? 'btn-primary' : 'btn-secondary'}`}
                   onClick={() => setActiveSetFilter('intersect')}
                 >
-                  INTERSECT (A ∩ B) : {setOps.intersect_accounts_and_loans?.length || 0}
+                  INTERSECT ({setOps.intersect_accounts_and_loans?.length || 0})
                 </button>
                 <button 
                   className={`btn btn-sm ${activeSetFilter === 'union' ? 'btn-primary' : 'btn-secondary'}`}
                   onClick={() => setActiveSetFilter('union')}
                 >
-                  UNION (A ∪ B) : {setOps.union_accounts_or_loans?.length || 0}
+                  UNION ({setOps.union_accounts_or_loans?.length || 0})
                 </button>
                 <button 
                   className={`btn btn-sm ${activeSetFilter === 'except' ? 'btn-primary' : 'btn-secondary'}`}
                   onClick={() => setActiveSetFilter('except')}
                 >
-                  EXCEPT (A − B) : {setOps.except_accounts_no_loans?.length || 0}
+                  EXCEPT ({setOps.except_accounts_no_loans?.length || 0})
                 </button>
               </div>
             </div>
 
             {/* Set definition banner */}
-            <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', borderTop: '3px solid var(--accent)', marginBottom: '1rem', fontSize: '0.8rem' }}>
+            <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', marginBottom: '1rem', fontSize: '0.8rem' }}>
               {activeSetFilter === 'intersect' && (
                 <span>
-                  <strong>A ∩ B (INTERSECT):</strong> Customers who hold <strong>both</strong> an active bank account AND an active loan. These represent prime cross-serviced core banking relationships.
+                  <strong>INTERSECT (Both Account & Loan):</strong> Customers who hold <strong>both</strong> an active bank account AND an active loan. These represent prime cross-serviced core banking relationships.
                 </span>
               )}
               {activeSetFilter === 'union' && (
                 <span>
-                  <strong>A ∪ B (UNION):</strong> Total distinct universe of all individuals who either hold an account or have applied for a loan.
+                  <strong>UNION (All Active Customers):</strong> Total distinct universe of all individuals who either hold an account or have applied for a loan.
                 </span>
               )}
               {activeSetFilter === 'except' && (
                 <span>
-                  <strong>A − B (EXCEPT / MINUS):</strong> Pure Depositors who have savings/current/FD accounts but have <strong>never taken any loan</strong>. Primary targets for credit card / pre-approved lending.
+                  <strong>EXCEPT (Accounts Only):</strong> Pure Depositors who have savings/current/FD accounts but have <strong>never taken any loan</strong>. Primary targets for lending products.
                 </span>
               )}
             </div>

@@ -103,7 +103,7 @@ export default function StatementView({ accounts, showToast }) {
 
       {/* Account Details Header Banner */}
       {activeAccount && (
-        <div className="card" style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', borderTop: '3px solid var(--accent)' }}>
+        <div className="card" style={{ background: 'var(--bg-tertiary)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
