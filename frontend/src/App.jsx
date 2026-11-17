@@ -179,34 +179,20 @@ export default function App() {
         )}
       </main>
 
-      <footer className="footer">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
-          <span>
-            © {new Date().getFullYear()}{' '}
-            <a 
-              href="https://github.com/suhaniyadav-netizen/GareebSQL" 
-              target="_blank" 
-              rel="noreferrer"
-              style={{ fontWeight: 800, color: 'var(--text-primary)', textDecoration: 'none' }}
-              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'}
-              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
-            >
-              <strong>Suhani Yadav</strong>
-            </a>
-          </span>
-          <span style={{ color: 'var(--border-strong)' }}>•</span>
-          <span>GareebSQL Core Banking System</span>
-          <span style={{ color: 'var(--border-strong)' }}>•</span>
-          <span className="badge badge-muted" title="Relational Normalization">BCNF / 3NF NORMALIZED</span>
-          <span className="badge badge-muted" title="Transaction Control Language & ACID Guarantees">ACID (TCL)</span>
-          <span className="badge badge-muted" title="Referential & Domain Integrity Constraints">PK • FK RESTRICT</span>
-        </div>
-
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
-          <span>ENGINE: <code>InnoDB (MySQL 8.0)</code></span>
-          <span style={{ color: 'var(--border-strong)' }}>•</span>
-          <span>THEME: <code>{theme.toUpperCase()}</code></span>
-        </div>
+      <footer className="footer" style={{ justifyContent: 'center' }}>
+        <span>
+          © {new Date().getFullYear()}{' '}
+          <a 
+            href="https://github.com/suhaniyadav-netizen/GareebSQL" 
+            target="_blank" 
+            rel="noreferrer"
+            style={{ fontWeight: 800, color: 'var(--text-primary)', textDecoration: 'none' }}
+            onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent)'}
+            onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+          >
+            <strong>Suhani Yadav</strong>
+          </a>
+        </span>
       </footer>
 
       <Toast toasts={toasts} onDismiss={dismissToast} />

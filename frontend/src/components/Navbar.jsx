@@ -46,11 +46,6 @@ export default function Navbar({
         </div>
 
         <div className="header-actions">
-          <div className="status-pill" title="MySQL Backend Connectivity">
-            <span className={`status-dot ${isOnline ? 'online' : 'offline'}`} />
-            <span>{isOnline ? 'ENGINE ONLINE' : 'DISCONNECTED'}</span>
-          </div>
-
           <button 
             className="btn-icon" 
             onClick={onRefresh} 

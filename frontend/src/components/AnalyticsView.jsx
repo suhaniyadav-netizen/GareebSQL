@@ -226,7 +226,7 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
 
       {/* SQL Logic Inspector Drawer */}
       {showSqlInspector && (
-        <div className="card" style={{ background: 'var(--bg-tertiary)', borderLeft: '4px solid var(--info)' }}>
+        <div className="card" style={{ background: 'var(--bg-tertiary)', borderTop: '3px solid var(--accent)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
             <span style={{ fontSize: '0.75rem', fontWeight: 700, fontFamily: 'var(--font-mono)', textTransform: 'uppercase', color: 'var(--info)' }}>
               UNDERLYING MYSQL SCHEMA & RELATIONAL LOGIC ({activeTab.toUpperCase()})
@@ -240,7 +240,7 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
 
       {/* Financial Health & Banking Cockpit Metrics */}
       <div className="kpi-grid">
-        <div className="kpi-card" style={{ borderTopColor: 'var(--accent)' }}>
+        <div className="kpi-card">
           <div className="kpi-label">TOTAL VAULT DEPOSITS</div>
           <div className="kpi-value">{formatCurrency(totalVaultBalance)}</div>
           <div className="kpi-sub">
@@ -248,7 +248,7 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
           </div>
         </div>
 
-        <div className="kpi-card" style={{ borderTopColor: 'var(--info)' }}>
+        <div className="kpi-card">
           <div className="kpi-label">LOAN-TO-DEPOSIT RATIO (LDR)</div>
           <div className="kpi-value">{ldrRatio}%</div>
           <div className="kpi-sub">
@@ -259,7 +259,7 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
           </div>
         </div>
 
-        <div className="kpi-card" style={{ borderTopColor: 'var(--warning)' }}>
+        <div className="kpi-card">
           <div className="kpi-label">PORTFOLIO RECOVERY RATE</div>
           <div className="kpi-value">{loanRecoveryRate}%</div>
           <div className="kpi-sub">
@@ -267,7 +267,7 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
           </div>
         </div>
 
-        <div className="kpi-card" style={{ borderTopColor: '#a855f7' }}>
+        <div className="kpi-card">
           <div className="kpi-label">KYC COMPLIANCE INDEX</div>
           <div className="kpi-value">{kycRate}%</div>
           <div className="kpi-sub">
@@ -669,7 +669,7 @@ ORDER BY month_year DESC, monthly_deposit_rank ASC;`
             </div>
 
             {/* Set definition banner */}
-            <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', borderLeft: '4px solid var(--accent)', marginBottom: '1rem', fontSize: '0.8rem' }}>
+            <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-tertiary)', border: '1px solid var(--border-strong)', borderTop: '3px solid var(--accent)', marginBottom: '1rem', fontSize: '0.8rem' }}>
               {activeSetFilter === 'intersect' && (
                 <span>
                   <strong>A ∩ B (INTERSECT):</strong> Customers who hold <strong>both</strong> an active bank account AND an active loan. These represent prime cross-serviced core banking relationships.

@@ -32,9 +32,9 @@ export default function DashboardView({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Precision KPI Cards with Color Accents */}
+      {/* Precision KPI Cards */}
       <div className="kpi-grid">
-        <div className="kpi-card" style={{ borderTopColor: 'var(--accent)' }}>
+        <div className="kpi-card">
           <div className="kpi-label">TOTAL VAULT DEPOSITS</div>
           <div className="kpi-value">{formatCurrency(accounts.total_balance)}</div>
           <div className="kpi-sub">
@@ -42,7 +42,7 @@ export default function DashboardView({
           </div>
         </div>
 
-        <div className="kpi-card" style={{ borderTopColor: 'var(--info)' }}>
+        <div className="kpi-card">
           <div className="kpi-label">CUSTOMER DIRECTORY</div>
           <div className="kpi-value">{customers.total || 0}</div>
           <div className="kpi-sub">
@@ -51,7 +51,7 @@ export default function DashboardView({
           </div>
         </div>
 
-        <div className="kpi-card" style={{ borderTopColor: 'var(--warning)' }}>
+        <div className="kpi-card">
           <div className="kpi-label">DISBURSED CREDIT BOOK</div>
           <div className="kpi-value">{formatCurrency(loans.total_principal)}</div>
           <div className="kpi-sub">
@@ -59,7 +59,7 @@ export default function DashboardView({
           </div>
         </div>
 
-        <div className="kpi-card" style={{ borderTopColor: '#a855f7' }}>
+        <div className="kpi-card">
           <div className="kpi-label">TRANSACTED VOLUME</div>
           <div className="kpi-value">{formatCurrency(transactions.total_volume)}</div>
           <div className="kpi-sub">
@@ -70,7 +70,7 @@ export default function DashboardView({
       </div>
 
       {/* Quick Launchpad Banner */}
-      <div className="card" style={{ borderLeft: '3px solid var(--accent)' }}>
+      <div className="card">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h3 style={{ fontSize: '0.95rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.2rem' }}>

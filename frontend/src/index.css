@@ -303,6 +303,7 @@ code, pre, .font-mono {
 .card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-strong);
+  border-top: 2px solid var(--accent);
   padding: 1.25rem;
   box-shadow: var(--shadow-sm);
   position: relative;
@@ -343,7 +344,7 @@ code, pre, .font-mono {
 .kpi-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-strong);
-  border-top: 3px solid var(--accent);
+  border-top: 3px solid var(--accent) !important;
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
