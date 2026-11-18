@@ -1,18 +1,17 @@
 # GareebSQL
 
-A full-stack Core Banking Relational Database Management System (`sppa_bank_db`) built with MySQL 8.0, Python Flask, and React 19. Designed with strict 3NF/BCNF normalization, ACID transaction controls (TCL) with pessimistic locking, role-based access control, and an interactive dual-theme web interface.
+A Core Banking Relational Database Management System (`sppa_bank_db`) built with MySQL 8.0 and Python Flask. Designed with strict 3NF/BCNF normalization, ACID transaction controls (TCL) with pessimistic locking, and role-based access control.
 
 ---
 
 ## Quickstart
 
-Run both the Backend API (Flask :5000) and Frontend Web App (Vite :5173) with automatic dependency installation:
+Start the API backend and services with automatic dependency setup:
 
 ```bash
 npm run dev
 ```
 
-- Web Interface: `http://localhost:5173`
 - REST API: `http://localhost:5000`
 - API Health Check: `http://localhost:5000/api/health`
 
@@ -22,7 +21,6 @@ npm run dev
 
 - **Database Tier (MySQL 8.0 / InnoDB):** Relational schema `sppa_bank_db` with domain constraints, foreign key cascades, views, composite B-Tree indexes, stored procedures, triggers, and TCL concurrency controls.
 - **Application Tier (Python 3.11 / Flask):** Modular REST API with connection pooling (`mysql-connector-python`), input validation, and unified JSON responses.
-- **Presentation Tier (React 19 / Vite 8):** Single-page application featuring Obsidian Dark and Swiss Light themes, live core engine heartbeat, KYC management, atomic transfers, passbook statement generation, and an interactive DBMS analytics playground.
 
 ---
 
@@ -105,19 +103,6 @@ Built with Flask blueprints and connection pooling:
 
 ---
 
-## Frontend Web Application
-
-- **Dual-Theme Mode:** Obsidian Dark (`#090d16`) and Swiss Light (`#f8fafc`) with persistent local storage.
-- **Core Engine Heartbeat:** Proactive polling indicator for MySQL/Flask service status.
-- **Executive Dashboard:** Live KPI cards for total deposits, credit book, active accounts, and monthly transaction flow.
-- **Account & Customer Directory:** Real-time search, KYC status indicators, and account lifecycle management.
-- **Transaction Terminal:** Dedicated UI for cash deposits, cash withdrawals, and atomic multi-account transfers.
-- **Passbook Statement Generator:** Interactive statement generation with date filtering and print-ready layout.
-- **Credit Desk:** Loan origination, approval workflows, and one-click EMI repayments.
-- **DBMS Analytics Playground:** Interactive explorer for database views, subqueries, and relational set operations.
-
----
-
 ## Manual Setup & Step-by-Step Execution
 
 ### 1. Database Setup (MySQL 8.0)
@@ -139,13 +124,6 @@ python run.py
 Run automated backend tests:
 ```bash
 python test_api.py
-```
-
-### 3. Frontend Setup (React 19 / Vite)
-```bash
-cd frontend
-npm install
-npm run dev
 ```
 
 ---
