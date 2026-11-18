@@ -42,12 +42,12 @@ console.log(`${colors.cyan}${colors.bold}=======================================
 // 1. Check frontend dependencies
 const frontendNodeModules = path.join(frontendDir, 'node_modules');
 if (!fs.existsSync(frontendNodeModules)) {
-  console.log(`${colors.yellow}⚡ Frontend dependencies not found. Installing via npm...${colors.reset}`);
+  console.log(`${colors.yellow}[*] Frontend dependencies not found. Installing via npm...${colors.reset}`);
   try {
     execSync(`${npmCmd} install`, { cwd: frontendDir, stdio: 'inherit' });
-    console.log(`${colors.green}✓ Frontend dependencies installed successfully.${colors.reset}\n`);
+    console.log(`${colors.green}[OK] Frontend dependencies installed successfully.${colors.reset}\n`);
   } catch (err) {
-    console.error(`${colors.red}✗ Failed to install frontend dependencies: ${err.message}${colors.reset}`);
+    console.error(`${colors.red}[ERROR] Failed to install frontend dependencies: ${err.message}${colors.reset}`);
     process.exit(1);
   }
 }
@@ -56,12 +56,12 @@ if (!fs.existsSync(frontendNodeModules)) {
 try {
   execSync(`${pythonCmd} -c "import flask, mysql.connector, dotenv, flask_cors"`, { stdio: 'ignore' });
 } catch {
-  console.log(`${colors.yellow}⚡ Backend Python dependencies not found. Installing via pip...${colors.reset}`);
+  console.log(`${colors.yellow}[*] Backend Python dependencies not found. Installing via pip...${colors.reset}`);
   try {
     execSync(`${pythonCmd} -m pip install -r requirements.txt`, { cwd: backendDir, stdio: 'inherit' });
-    console.log(`${colors.green}✓ Backend dependencies installed successfully.${colors.reset}\n`);
+    console.log(`${colors.green}[OK] Backend dependencies installed successfully.${colors.reset}\n`);
   } catch (err) {
-    console.error(`${colors.red}✗ Failed to install backend dependencies: ${err.message}${colors.reset}`);
+    console.error(`${colors.red}[ERROR] Failed to install backend dependencies: ${err.message}${colors.reset}`);
   }
 }
 

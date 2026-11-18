@@ -1,10 +1,10 @@
-# GareebSQL Frontend 💻
+# GareebSQL Frontend
 
 A minimalist, high-aesthetic web application for the GareebSQL Core Banking System (`sppa_bank_db`). Built with **React 19**, **Vite 8**, **Lucide React**, and a custom-crafted dual theme mode (Obsidian Dark & Swiss Light).
 
 ---
 
-## ✨ Features
+## Features
 
 - **Dual Theme Mode:** Seamless switching between Obsidian Dark (`#090d16`) and Swiss Light (`#f8fafc`), with preferences persisted in `localStorage`.
 - **Live Core Engine Heartbeat:** Proactive ping indicator for MySQL/Flask backend status (`/api/health`).
@@ -17,7 +17,7 @@ A minimalist, high-aesthetic web application for the GareebSQL Core Banking Syst
 
 ---
 
-## 🚀 Quickstart
+## Quickstart
 
 ### 1. Install Dependencies
 ```bash

@@ -1,4 +1,4 @@
-# 🏛️ Relational Model & Integrity Constraints
+# Relational Model & Integrity Constraints
 > **SPPA Core Banking System (`sppa_bank_db`)**
 
 ---

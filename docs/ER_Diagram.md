@@ -1,4 +1,4 @@
-# 📊 Entity-Relationship (ER) Diagram & Conceptual Schema
+# Entity-Relationship (ER) Diagram & Conceptual Schema
 > **SPPA Core Banking System (`sppa_bank_db`)**
 
 ---
@@ -158,12 +158,12 @@ Tracks installment payments made against active loans, linked directly to transa
 
 | Relationship | Entities Involved | Cardinality | Participation | Description |
 | :--- | :--- | :---: | :---: | :--- |
-| **Referral** | `CUSTOMERS` ➔ `CUSTOMERS` | `1 : N` | Partial : Partial | A customer may refer zero or multiple customers. A referee has at most one referrer. |
-| **Account Ownership** | `CUSTOMERS` ➔ `ACCOUNTS` | `1 : N` | Partial : Total | A customer may own zero, one, or multiple accounts. An account MUST belong to exactly one customer. |
-| **Branch Management** | `BRANCHES` ➔ `ACCOUNTS` | `1 : N` | Partial : Total | A branch manages zero to many accounts. An account is domiciled at exactly one branch. |
-| **Loan Borrowing** | `CUSTOMERS` ➔ `LOANS` | `1 : N` | Partial : Total | A customer may apply for zero or multiple loans. A loan belongs to exactly one customer. |
-| **Loan Origination** | `BRANCHES` ➔ `LOANS` | `1 : N` | Partial : Total | A branch originates zero to multiple loans. A loan is sanctioned by exactly one branch. |
-| **Account Ledger** | `ACCOUNTS` ➔ `TRANSACTIONS` | `1 : N` | Partial : Total | An account has zero to many transactions. Every transaction relates to a primary account. |
-| **Transfer Counterparty** | `ACCOUNTS` ➔ `TRANSACTIONS` | `1 : N` | Partial : Partial | A transfer transaction optionally references a destination/originating counterparty account. |
-| **Loan Amortization** | `LOANS` ➔ `LOAN_REPAYMENTS` | `1 : N` | Partial : Total | A loan has zero to many repayments over its tenure. |
-| **Repayment Settlement** | `TRANSACTIONS` ➔ `LOAN_REPAYMENTS` | `1 : 1` | Partial : Total | Every loan repayment corresponds to exactly one ledger transaction entry. |
+| **Referral** | `CUSTOMERS` -> `CUSTOMERS` | `1 : N` | Partial : Partial | A customer may refer zero or multiple customers. A referee has at most one referrer. |
+| **Account Ownership** | `CUSTOMERS` -> `ACCOUNTS` | `1 : N` | Partial : Total | A customer may own zero, one, or multiple accounts. An account MUST belong to exactly one customer. |
+| **Branch Management** | `BRANCHES` -> `ACCOUNTS` | `1 : N` | Partial : Total | A branch manages zero to many accounts. An account is domiciled at exactly one branch. |
+| **Loan Borrowing** | `CUSTOMERS` -> `LOANS` | `1 : N` | Partial : Total | A customer may apply for zero or multiple loans. A loan belongs to exactly one customer. |
+| **Loan Origination** | `BRANCHES` -> `LOANS` | `1 : N` | Partial : Total | A branch originates zero to multiple loans. A loan is sanctioned by exactly one branch. |
+| **Account Ledger** | `ACCOUNTS` -> `TRANSACTIONS` | `1 : N` | Partial : Total | An account has zero to many transactions. Every transaction relates to a primary account. |
+| **Transfer Counterparty** | `ACCOUNTS` -> `TRANSACTIONS` | `1 : N` | Partial : Partial | A transfer transaction optionally references a destination/originating counterparty account. |
+| **Loan Amortization** | `LOANS` -> `LOAN_REPAYMENTS` | `1 : N` | Partial : Total | A loan has zero to many repayments over its tenure. |
+| **Repayment Settlement** | `TRANSACTIONS` -> `LOAN_REPAYMENTS` | `1 : 1` | Partial : Total | Every loan repayment corresponds to exactly one ledger transaction entry. |

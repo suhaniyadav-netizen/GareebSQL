@@ -15,11 +15,11 @@ The schema consists of 6 interconnected tables structured to preserve referentia
 | Table | Primary Key | Foreign Keys | Key Constraints & Integrity Rules |
 | :--- | :--- | :--- | :--- |
 | **`branches`** | `branch_id` (Auto) | *None* | `ifsc_code` UNIQUE (11 alphanumeric), `city` NOT NULL |
-| **`customers`** | `customer_id` (Auto) | `referred_by` ➔ `customers(customer_id)` | UNIQUE (`email`, `phone`, `pan_number`), `kyc_status` ENUM(`PENDING`, `VERIFIED`, `REJECTED`), `ON DELETE SET NULL` on referral |
-| **`accounts`** | `account_id` (Auto) | `customer_id` ➔ `customers`<br>`branch_id` ➔ `branches` | `account_number` UNIQUE, `CHECK (balance >= 0.00)`, `status` ENUM(`ACTIVE`, `FROZEN`, `CLOSED`), `ON DELETE RESTRICT` |
-| **`loans`** | `loan_id` (Auto) | `customer_id` ➔ `customers`<br>`branch_id` ➔ `branches` | `CHECK (principal_amount > 0)`, `CHECK (tenure_months > 0)`, `CHECK (outstanding_balance >= 0)`, `ON DELETE RESTRICT` |
-| **`transactions`**| `transaction_id` (Auto) | `account_id` ➔ `accounts`<br>`related_account_id` ➔ `accounts` | `reference_no` UNIQUE, `CHECK (amount > 0)`, `txn_type` ENUM(`DEPOSIT`, `WITHDRAWAL`, `TRANSFER_IN`, `TRANSFER_OUT`, `LOAN_EMI`) |
-| **`loan_repayments`** | `repayment_id` (Auto) | `loan_id` ➔ `loans`<br>`transaction_id` ➔ `transactions` | `transaction_id` UNIQUE (1:1 ledger link), `CHECK (emi_amount > 0)`, `ON DELETE RESTRICT` |
+| **`customers`** | `customer_id` (Auto) | `referred_by` -> `customers(customer_id)` | UNIQUE (`email`, `phone`, `pan_number`), `kyc_status` ENUM(`PENDING`, `VERIFIED`, `REJECTED`), `ON DELETE SET NULL` on referral |
+| **`accounts`** | `account_id` (Auto) | `customer_id` -> `customers`<br>`branch_id` -> `branches` | `account_number` UNIQUE, `CHECK (balance >= 0.00)`, `status` ENUM(`ACTIVE`, `FROZEN`, `CLOSED`), `ON DELETE RESTRICT` |
+| **`loans`** | `loan_id` (Auto) | `customer_id` -> `customers`<br>`branch_id` -> `branches` | `CHECK (principal_amount > 0)`, `CHECK (tenure_months > 0)`, `CHECK (outstanding_balance >= 0)`, `ON DELETE RESTRICT` |
+| **`transactions`**| `transaction_id` (Auto) | `account_id` -> `accounts`<br>`related_account_id` -> `accounts` | `reference_no` UNIQUE, `CHECK (amount > 0)`, `txn_type` ENUM(`DEPOSIT`, `WITHDRAWAL`, `TRANSFER_IN`, `TRANSFER_OUT`, `LOAN_EMI`) |
+| **`loan_repayments`** | `repayment_id` (Auto) | `loan_id` -> `loans`<br>`transaction_id` -> `transactions` | `transaction_id` UNIQUE (1:1 ledger link), `CHECK (emi_amount > 0)`, `ON DELETE RESTRICT` |
 
 ---
 

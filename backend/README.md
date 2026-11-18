@@ -1,10 +1,10 @@
-# GareebSQL Backend API 🏦
+# GareebSQL Backend API
 
 A production-grade Python Flask REST API connecting the core banking relational database (`sppa_bank_db`) with frontend clients. Built with **Flask**, **mysql-connector-python** connection pooling, **flask-cors**, and **python-dotenv**.
 
 ---
 
-## 📁 Directory Structure
+## Directory Structure
 
 ```text
 backend/
@@ -32,7 +32,7 @@ backend/
 
 ---
 
-## 🚀 Setup & Installation
+## Setup & Installation
 
 ### 1. Prerequisites
 - Python 3.9+ (tested with Python 3.11)
@@ -67,7 +67,7 @@ The server will start at `http://localhost:5000`.
 
 ---
 
-## 🧪 Running Automated Tests
+## Running Automated Tests
 
 Run the test suite to verify database connectivity and all endpoints:
 ```bash
@@ -76,7 +76,7 @@ python test_api.py
 
 ---
 
-## 📡 API Endpoints Reference
+## API Endpoints Reference
 
 ### Health & Root
 | Method | Endpoint | Description |

@@ -1,4 +1,4 @@
-# 📐 Database Normalization Analysis (1NF to BCNF)
+# Database Normalization Analysis (1NF to BCNF)
 > **SPPA Core Banking System (`sppa_bank_db`)**
 
 ---
@@ -139,12 +139,12 @@ $$\text{UNF}(\underline{\text{CustID}}, \text{CustName}, \text{Email}, \text{Bra
 
 | Table Name | 1NF Compliance | 2NF Compliance | 3NF Compliance | BCNF Compliance | Determinant Verification |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **`branches`** | ✅ Atomic | ✅ No partial FDs | ✅ No transitive FDs | ✅ Superkey | `branch_id`, `ifsc_code` |
-| **`customers`** | ✅ Atomic | ✅ No partial FDs | ✅ No transitive FDs | ✅ Superkey | `customer_id`, `email`, `phone`, `pan_number` |
-| **`accounts`** | ✅ Atomic | ✅ No partial FDs | ✅ No transitive FDs | ✅ Superkey | `account_id`, `account_number` |
-| **`loans`** | ✅ Atomic | ✅ No partial FDs | ✅ No transitive FDs | ✅ Superkey | `loan_id` |
-| **`transactions`**| ✅ Atomic | ✅ No partial FDs | ✅ No transitive FDs | ✅ Superkey | `transaction_id`, `reference_no` |
-| **`loan_repayments`** | ✅ Atomic | ✅ No partial FDs | ✅ No transitive FDs | ✅ Superkey | `repayment_id`, `transaction_id` |
+| **`branches`** | [Pass] Atomic | [Pass] No partial FDs | [Pass] No transitive FDs | [Pass] Superkey | `branch_id`, `ifsc_code` |
+| **`customers`** | [Pass] Atomic | [Pass] No partial FDs | [Pass] No transitive FDs | [Pass] Superkey | `customer_id`, `email`, `phone`, `pan_number` |
+| **`accounts`** | [Pass] Atomic | [Pass] No partial FDs | [Pass] No transitive FDs | [Pass] Superkey | `account_id`, `account_number` |
+| **`loans`** | [Pass] Atomic | [Pass] No partial FDs | [Pass] No transitive FDs | [Pass] Superkey | `loan_id` |
+| **`transactions`**| [Pass] Atomic | [Pass] No partial FDs | [Pass] No transitive FDs | [Pass] Superkey | `transaction_id`, `reference_no` |
+| **`loan_repayments`** | [Pass] Atomic | [Pass] No partial FDs | [Pass] No transitive FDs | [Pass] Superkey | `repayment_id`, `transaction_id` |
 
 ---
 
