@@ -162,14 +162,3 @@ GareebSQL/
 |-- package.json            # Root scripts configuration
 `-- README.md               # Main project documentation
 ```
-
----
-
-## Documentation Index
-
-- [Database Walkthrough & Screenshots](./database/README.md)
-- [Entity-Relationship Diagram](./docs/ER_Diagram.md)
-- [Normalization Analysis (1NF to BCNF)](./docs/Normalization.md)
-- [Relational Model & Constraints](./docs/Relational_Model.md)
-- [Backend API Documentation](./backend/README.md)
-- [Frontend Guide](./frontend/README.md)
