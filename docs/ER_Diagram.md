@@ -9,7 +9,7 @@ The **SPPA Bank Database** is modeled as an enterprise-grade commercial banking 
 
 ---
 
-## 2. Visual ER Diagram (Crow's Foot Notation)
+## 2. Visual ER Diagram 
 
 ```mermaid
 erDiagram
@@ -88,7 +88,7 @@ erDiagram
 
 ## 3. Entity Classification & Attribute Breakdown
 
-### 3.1 `BRANCHES` (Strong Entity)
+### 3.1 `BRANCHES` 
 Represents the physical branch offices of the banking network.
 * **`branch_id`** (`INT`, PK, Auto Increment): Unique surrogate identifier for each branch.
 * **`branch_name`** (`VARCHAR(100)`, NOT NULL): Official branch designation.
@@ -96,7 +96,7 @@ Represents the physical branch offices of the banking network.
 * **`city`** (`VARCHAR(50)`, NOT NULL): City where the branch operates.
 * **`created_at`** (`TIMESTAMP`): Timestamp of branch provisioning.
 
-### 3.2 `CUSTOMERS` (Strong Entity)
+### 3.2 `CUSTOMERS` 
 Represents registered bank customers undergoing KYC compliance.
 * **`customer_id`** (`INT`, PK, Auto Increment): Unique customer identifier.
 * **`first_name`**, **`last_name`** (`VARCHAR(50)`, NOT NULL): Legal identity attributes.
@@ -107,7 +107,7 @@ Represents registered bank customers undergoing KYC compliance.
 * **`referred_by`** (`INT`, FK, NULL): Unary recursive reference to `customers(customer_id)`.
 * **`created_at`** (`TIMESTAMP`): Registration timestamp.
 
-### 3.3 `ACCOUNTS` (Associative Entity)
+### 3.3 `ACCOUNTS` 
 Represents financial deposit and current accounts owned by customers at a specific branch.
 * **`account_id`** (`INT`, PK, Auto Increment): Internal account identifier.
 * **`account_number`** (`VARCHAR(16)`, NOT NULL, UNIQUE): 16-digit public bank account number.
@@ -119,7 +119,7 @@ Represents financial deposit and current accounts owned by customers at a specif
 * **`status`** (`ENUM('ACTIVE', 'FROZEN', 'CLOSED')`): Operational account lifecycle status.
 * **`opened_at`** (`TIMESTAMP`): Account creation date and time.
 
-### 3.4 `LOANS` (Entity)
+### 3.4 `LOANS` 
 Represents lending contracts sanctioned by branches to eligible customers.
 * **`loan_id`** (`INT`, PK, Auto Increment): Unique loan agreement identifier.
 * **`customer_id`** (`INT`, FK, NOT NULL): Primary borrower.
@@ -132,7 +132,7 @@ Represents lending contracts sanctioned by branches to eligible customers.
 * **`application_status`** (`ENUM('APPLIED', 'APPROVED', 'REJECTED', 'CLOSED')`): Approval lifecycle state.
 * **`applied_at`** (`TIMESTAMP`): Loan origination timestamp.
 
-### 3.5 `TRANSACTIONS` (Weak / Dependent Entity)
+### 3.5 `TRANSACTIONS` 
 Append-only double-entry transactional ledger recording all cash flows.
 * **`transaction_id`** (`BIGINT`, PK, Auto Increment): Unique ledger sequence number.
 * **`reference_no`** (`VARCHAR(36)`, NOT NULL, UNIQUE): Unique external transaction reference.
@@ -144,7 +144,7 @@ Append-only double-entry transactional ledger recording all cash flows.
 * **`description`** (`VARCHAR(255)`): Transaction purpose memo.
 * **`txn_timestamp`** (`TIMESTAMP`): Precise system execution timestamp.
 
-### 3.6 `LOAN_REPAYMENTS` (Associative / Settlement Entity)
+### 3.6 `LOAN_REPAYMENTS` 
 Tracks installment payments made against active loans, linked directly to transaction ledger records.
 * **`repayment_id`** (`INT`, PK, Auto Increment): Unique installment identifier.
 * **`loan_id`** (`INT`, FK, NOT NULL): Associated loan agreement.
